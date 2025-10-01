@@ -1,3 +1,8 @@
+<style>
+h2 {
+  border-bottom: none !important;
+}
+</style>
 # SOMnet Collection – TensorFlow Implementations
 
 This repository ships four Self-Organizing Map network variants written in TensorFlow.  
