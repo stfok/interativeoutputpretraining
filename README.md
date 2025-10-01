@@ -1,3 +1,29 @@
+# Neural Network Implementation Collection
+
+This repository contains multiple neural network implementations based on TensorFlow.
+
+## Requirements
+
+- Python 3.x
+- TensorFlow (specific versions required for each model)
+
+## Models
+
+### 1. FC-SOMnet
+**TensorFlow Version:** 1.15.5
+
+Navigate to the `FC-SOMnet` folder:
+
+```bash
+cd FC-SOMnet
+```
+Execution Commands:
+Run Plain FC One:
+```bash
+cd FC-SOMnet
+``
+
+
 # SOMnet Collection – TensorFlow Implementations
 
 This repository ships four Self-Organizing Map network variants written in TensorFlow.  
