@@ -1,13 +1,8 @@
-<style>
-h2 {
-  border-bottom: none !important;
-}
-</style>
 # SOMnet Collection – TensorFlow Implementations
 
 This repository ships four Self-Organizing Map network variants written in TensorFlow.  
 Each sub-folder contains two baseline scripts (“Plain … One / Two”) and the full SOM-enhanced model.
-
+<h2 style="border-bottom: none;">1. FC-SOMnet</h2>
 ## 1. FC-SOMnet  
 **TensorFlow:** 1.15.5  
 **Folder:** `FC-SOMnet`
