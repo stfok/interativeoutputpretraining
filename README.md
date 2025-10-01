@@ -51,7 +51,27 @@ Run CNN-SOMnet:
 ```bash
 python CNNSOMnet.py
 ```
+### 3. Transformer-SOMnet
+**TensorFlow Version:** 2.5.0
 
+Navigate to the `Tran-SOMnet` folder:
+
+```bash
+cd Tran-SOMnet
+```
+Execution Commands:  
+Run Plain Transformer One:
+```bash
+python plainone.py
+```
+Run Plain Transformer Two:
+```bash
+python plaintwo.py
+```
+Run Tran-SOMnet:
+```bash
+python TranSOMnet.py
+```
 
 
 
