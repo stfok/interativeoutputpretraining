@@ -30,6 +30,30 @@ Run FC-SOMnet:
 ```bash
 python FCSOMnet.py
 ```
+### 2. CNN-SOMnet
+**TensorFlow Version:** 2.5.0
+
+Navigate to the `CNN-SOMnet` folder:
+
+```bash
+cd CNN-SOMnet
+```
+Execution Commands:  
+Run Plain CNN One:
+```bash
+python plainone.py
+```
+Run Plain CNN Two:
+```bash
+python plaintwo.py
+```
+Run CNN-SOMnet:
+```bash
+python CNNSOMnet.py
+```
+
+
+
 
 # SOMnet Collection – TensorFlow Implementations
 
