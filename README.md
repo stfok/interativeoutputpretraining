@@ -1,10 +1,10 @@
-# SOMnet Family – TensorFlow Implementations
+# SOMnet Collection – TensorFlow Implementations
 
-This repository contains four Self-Organizing Map network (SOMnet) variants built on TensorFlow.  
-Each variant resides in its own folder and provides three entry-points: two “Plain” baselines and one full SOM-enhanced model.
+This repository ships four Self-Organizing Map network variants written in TensorFlow.  
+Each sub-folder contains two baseline scripts (“Plain … One / Two”) and the full SOM-enhanced model.
 
 ## 1. FC-SOMnet  
-**TensorFlow version:** 1.15.5  
+**TensorFlow:** 1.15.5  
 **Folder:** `FC-SOMnet`
 
 ```bash
@@ -13,16 +13,17 @@ python plainone.py      # Plain FC One
 python plaintwo.py      # Plain FC Two
 python FCSOMnet.py      # FC-SOMnet
 
+# SOMnet Collection – TensorFlow Implementations
+
+This repository ships four Self-Organizing Map network variants written in TensorFlow.  
+Each sub-folder contains two baseline scripts (“Plain … One / Two”) and the full SOM-enhanced model.
 
 ## 1. FC-SOMnet  
-**TensorFlow version:** 1.15.5  
+**TensorFlow:** 1.15.5  
 **Folder:** `FC-SOMnet`
 
 ```bash
-cd CNN-SOMnet
-python plainone.py      # Plain CNN One
-python plaintwo.py      # Plain CNN Two
-python FCSOMnet.py      # CNN-SOMnet
-
-3. Trans-SOMnet
-TensorFlow version: 2.5.0
+cd FC-SOMnet
+python plainone.py      # Plain FC One
+python plaintwo.py      # Plain FC Two
+python FCSOMnet.py      # FC-SOMnet
