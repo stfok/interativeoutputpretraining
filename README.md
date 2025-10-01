@@ -20,9 +20,16 @@ cd FC-SOMnet
 Execution Commands:  
 Run Plain FC One:
 ```bash
-cd FC-SOMnet
+python plainone.py
 ```
-
+Run Plain FC Two:
+```bash
+python plaintwo.py
+```
+Run FC-SOMnet:
+```bash
+python FCSOMnet.py
+```
 
 # SOMnet Collection – TensorFlow Implementations
 
