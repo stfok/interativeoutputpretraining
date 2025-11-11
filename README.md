@@ -18,13 +18,9 @@ Navigate to the `FC-SOMnet` folder:
 cd FC-SOMnet
 ```
 Execution Commands:  
-Run Plain FC One:
+Run Plain FCNN:
 ```bash
-python plainone.py
-```
-Run Plain FC Two:
-```bash
-python plaintwo.py
+python plain.py
 ```
 Run FC-SOMnet:
 ```bash
