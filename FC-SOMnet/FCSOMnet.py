@@ -19,8 +19,8 @@ outputY2 = 2*(inputX[:,4]) **3 +np.exp(inputX[:,5])
 outputY=np.transpose(np.array([outputY0, outputY1, outputY2]))
 #outputY =np.reshape(outputY,[-1,1])
 learning_rate=0.000025
-weight1 = tf.Variable(tf.truncated_normal([6, 12], stddev=0.1,dtype=tf.float64))
-bias1 = tf.Variable(tf.truncated_normal([12], stddev=0.1,dtype=tf.float64))#inputX.shape[1],
+weight1 = tf.Variable(tf.truncated_normal([6, 18], stddev=0.1,dtype=tf.float64))
+bias1 = tf.Variable(tf.truncated_normal([18], stddev=0.1,dtype=tf.float64))#inputX.shape[1],
 x1 = tf.placeholder(tf.float64, [None, 6])
 is_training = tf.placeholder(tf.bool, name='is_training') #tf.placeholder(tf.bool, shape=())
 '''
@@ -60,14 +60,14 @@ y2_=tf.nn.relu(y2v_)
 
 
 ##########################################3
-weightin1 = tf.Variable(tf.truncated_normal([12, 6], stddev=0.1,dtype=tf.float64))
-biasin1 = tf.Variable(tf.truncated_normal([6], stddev=0.1,dtype=tf.float64))#inputX.shape[1]
+weightin1 = tf.Variable(tf.truncated_normal([18, 12], stddev=0.1,dtype=tf.float64))
+biasin1 = tf.Variable(tf.truncated_normal([12], stddev=0.1,dtype=tf.float64))#inputX.shape[1]
 yin1 = tf.matmul(y1_, weightin1) + biasin1
 yin1=tf.nn.relu(yin1)
-weightin2 = tf.Variable(tf.truncated_normal([6, 6], stddev=0.1,dtype=tf.float64))
-biasin2 = tf.Variable(tf.truncated_normal([6], stddev=0.1,dtype=tf.float64))#inputX.shape[1]
+weightin2 = tf.Variable(tf.truncated_normal([12, 3], stddev=0.1,dtype=tf.float64))
+biasin2 = tf.Variable(tf.truncated_normal([3], stddev=0.1,dtype=tf.float64))#inputX.shape[1]
 
-wwpin = tf.Variable(tf.truncated_normal([12, 3], stddev=0.1,dtype=tf.float64))
+wwpin = tf.Variable(tf.truncated_normal([18, 3], stddev=0.1,dtype=tf.float64))
 #biaswwpin = tf.Variable(np.random.rand(50)/100)
 
 
@@ -75,14 +75,14 @@ wwpin = tf.Variable(tf.truncated_normal([12, 3], stddev=0.1,dtype=tf.float64))
 #biasin3 = tf.Variable(np.random.rand(50)/100)#inputX.shape[1]
 yin2 = tf.matmul(yin1, weightin2) + biasin2
 
-yin20=tf.nn.relu(yin2)
+#yin20=tf.nn.relu(yin2)
 
-weightin3 = tf.Variable(tf.truncated_normal([6, 3], stddev=0.1,dtype=tf.float64))
-biasin3 = tf.Variable(tf.truncated_normal([3], stddev=0.1,dtype=tf.float64))#inputX.shape[1]
-yin22 = tf.matmul(yin20, weightin3) + biasin3
+#weightin3 = tf.Variable(tf.truncated_normal([10, 3], stddev=0.1,dtype=tf.float64))
+#biasin3 = tf.Variable(tf.truncated_normal([3], stddev=0.1,dtype=tf.float64))#inputX.shape[1]
+#yin22 = tf.matmul(yin20, weightin3) + biasin3
 
 
-yin3=tf.matmul(y1_, wwpin)+yin22#biaswwpin
+yin3=tf.matmul(y10_, wwpin)+yin2#biaswwpin
 
 
 
@@ -163,7 +163,7 @@ new_W2 = weight2.assign(weight2 - learning_rate * grad_W2)
 new_b2 = bias2.assign(bias2 - learning_rate * grad_b2)
 '''
 gr1=[wwpin] #wwp
-gr2=[weightin1, weightin2, weightin3, biasin1, biasin2, biasin3]#,weight2, bias2
+gr2=[weightin1, weightin2,  biasin1, biasin2]#,weight2, bias2
 gr3=[ weight1, bias1] 
 gr4=[weightin1er, biasin1er, weightin2er, biasin1er,wwper]
 #gr3z=[weightin1erz, biasin1erz, weightin2erz, biasin1erz]
@@ -338,6 +338,7 @@ v2 = sess.run(yin3, feed_dict={
 # 计算误差
 print(np.mean(np.linalg.norm(v1-v2, axis=1)))
 '''
+'''
 pa00=sess.run(weightin1)
 pa01=sess.run(weightin2)
 pa02=sess.run(weightin3)
@@ -389,7 +390,8 @@ v2=sess.run(yin3,feed_dict={x1: x_data, is_training: False})
 print(np.mean(np.linalg.norm(v1-v2,axis=1)))
 #pa1=[weightin1, weightin2, weightin3, biasin1, biasin2, biasin3, wwpin]
 #print((pa1-pa0).)
-
+'''
+'''
 #wwpin.load(pa06,sess)
 inputXT=np.random.rand(10000,6)-0.5
 outputb=np.zeros((10000,3))+outputY.mean(axis=0)
@@ -418,16 +420,17 @@ for i in range(500):
       #   weightb.load(0)
       #if xinw<-1:
       #   weightb.load(-1)
-    print('lossss', aa)
-pa00=sess.run(weightin1)
-pa01=sess.run(weightin2)
-pa02=sess.run(weightin3)
-pa03=sess.run(biasin1)
+    if i%10==0:
+      print('lossss', aa)
+'''
+'''
+pa00=sess.run(weight1)
+pa01=sess.run(weightin1)
+pa02=sess.run(weightin2)
+pa03=sess.run(bias1)
 pa04=sess.run(biasin1)
-pa05=sess.run(biasin1)
+pa05=sess.run(biasin2)
 pa06=sess.run(wwpin)
-
-
 
 
 
@@ -438,13 +441,103 @@ for i in range(500):
     for j in range(0,100):
       loss_,_=sess.run([loss,train3], feed_dict={x1: inputX[list2[j*100:(j+1)*100],:], y: outputY[list2[j*100:(j+1)*100],:], is_training: False})
       aa=aa+loss_
-    print('loss', aa)
-pa10=sess.run(weightin1)
-pa11=sess.run(weightin2)
-pa12=sess.run(weightin3)
-pa13=sess.run(biasin1)
+    if i%10==0:
+       print('loss', aa)
+
+    
+    
+pa10=sess.run(weight1)
+pa11=sess.run(weightin1)
+pa12=sess.run(weightin2)
+pa13=sess.run(bias1)
 pa14=sess.run(biasin1)
-pa15=sess.run(biasin1)
+pa15=sess.run(biasin2)
+pa16=sess.run(wwpin)
+ss=np.sum((pa00-pa10)**2)
+ss=ss+np.sum((pa01-pa11)**2)
+ss=ss+np.sum((pa02-pa12)**2)
+ss=ss+np.sum((pa03-pa13)**2)
+ss=ss+np.sum((pa04-pa14)**2)
+ss=ss+np.sum((pa05-pa15)**2)
+ss=ss+np.sum((pa06-pa16)**2)
+print("ss",ss)
+x_data = np.loadtxt('inputX2.csv', delimiter=',')#np.random.rand(1000,6)-0.5
+#x_data[:,6]=x_data[:,3]
+#x_data[:,7]=x_data[:,3]
+#x_data[:,8]=x_data[:,3]
+#x_data[:,9]=x_data[:,3]
+#print(x_data)
+#v1= x_data[:,0] *x_data[:,0] *4 + 2*x_data[:,1]-6*x_data[:,2]+2*x_data[:,3]-x_data[:,4]+1.5*x_data[:,5]#x_data[:,0] * 4 + 1
+v10=(x_data[:,0]+ x_data[:,1]) **2*2-6*np.exp(x_data[:,2])+2*np.sin(x_data[:,3])-x_data[:,4]**3+1.5*x_data[:,5]**2+25 
+v11=(x_data[:,0]) **2 -2*np.exp(x_data[:,2]+0.3)+2*np.cos(x_data[:,3])-20
+v12 = 2*(x_data[:,4]) **3 +np.exp(x_data[:,5])
+v1=np.transpose(np.array([v10, v11, v12]))
+#np.loadtxt('outputY2.csv', delimiter=',')#x_data[:,0] *x_data[:,0] *4 + 2*x_data[:,1]-6*x_data[:,2]+2*x_data[:,3]-x_data[:,4]+1.5*x_data[:,5]+10
+#print(v1)
+v2=sess.run(yin3,feed_dict={x1: x_data, is_training: False})
+#print(v2.T)
+print(np.mean(np.linalg.norm(v1-v2,axis=1)))
+inputXT=np.random.rand(10000,6)-0.5
+outputb=np.zeros((10000,3))#+outputY.mean(axis=0)
+print("pingjun",outputY.mean(axis=0))
+'''
+#wwpin.load(pa06,sess)
+inputXT=np.random.rand(10000,6)-0.5
+outputb=np.zeros((10000,3))+outputY.mean(axis=0)
+print("pingjun",outputY.mean(axis=0))
+for i in range(500):
+    list1=range(0,10000)
+    list2=random.sample(list1,10000)
+    aa=0
+    for j in range(0,100):
+      loss_,_=sess.run([loss,train2], feed_dict={x1: inputX[list2[j*100:(j+1)*100],:], y: outputb[list2[j*100:(j+1)*100],:], is_training: False})
+      aa=aa+loss_
+
+    #print('wwp',sess.run(wwp))
+    #print('weight1', sess.run(weight1))
+    #print('bias1', sess.run(bias1))
+    #print('weight2', sess.run(weight2))
+    #print('bias2', sess.run(bias2))
+    #print('weight3', sess.run(weight3))
+    #print('bias3', sess.run(bias3))
+    #sess.run(asd)
+    #xinw = sess.run(weightb)
+    #xinw2 = sess.run(weightbb)
+    #print(xinw)
+    #print(xinw2)
+      #if xinw>0:
+      #   weightb.load(0)
+      #if xinw<-1:
+      #   weightb.load(-1)
+    if i%10==0:
+        print('lossss', aa)
+
+
+
+pa00=sess.run(weight1)
+pa01=sess.run(weightin1)
+pa02=sess.run(weightin2)
+pa03=sess.run(bias1)
+pa04=sess.run(biasin1)
+pa05=sess.run(biasin2)
+pa06=sess.run(wwpin)
+
+
+for i in range(500):
+    list1=range(0,10000)
+    list2=random.sample(list1,10000)
+    aa=0
+    for j in range(0,100):
+      loss_,_=sess.run([loss,train3], feed_dict={x1: inputX[list2[j*100:(j+1)*100],:], y: outputY[list2[j*100:(j+1)*100],:], is_training: False})
+      aa=aa+loss_
+    if i%10==0:
+        print('loss', aa)
+pa10=sess.run(weight1)
+pa11=sess.run(weightin1)
+pa12=sess.run(weightin2)
+pa13=sess.run(bias1)
+pa14=sess.run(biasin1)
+pa15=sess.run(biasin2)
 pa16=sess.run(wwpin)
 ss=np.sum((pa00-pa10)**2)
 ss=ss+np.sum((pa01-pa11)**2)
@@ -502,13 +595,14 @@ for i in range(500):
       #   weightb.load(0)
       #if xinw<-1:
       #   weightb.load(-1)
-    print('lossss', aa)
-pa00=sess.run(weightin1)
-pa01=sess.run(weightin2)
-pa02=sess.run(weightin3)
-pa03=sess.run(biasin1)
+    if i%10==0:
+        print('lossss', aa)
+pa00=sess.run(weight1)
+pa01=sess.run(weightin1)
+pa02=sess.run(weightin2)
+pa03=sess.run(bias1)
 pa04=sess.run(biasin1)
-pa05=sess.run(biasin1)
+pa05=sess.run(biasin2)
 pa06=sess.run(wwpin)
 
 
@@ -522,13 +616,103 @@ for i in range(500):
     for j in range(0,100):
       loss_,_=sess.run([loss,train3], feed_dict={x1: inputX[list2[j*100:(j+1)*100],:], y: outputY[list2[j*100:(j+1)*100],:], is_training: False})
       aa=aa+loss_
-    print('loss', aa)
-pa10=sess.run(weightin1)
-pa11=sess.run(weightin2)
-pa12=sess.run(weightin3)
-pa13=sess.run(biasin1)
+    if i%10==0:
+        print('loss', aa)
+pa10=sess.run(weight1)
+pa11=sess.run(weightin1)
+pa12=sess.run(weightin2)
+pa13=sess.run(bias1)
 pa14=sess.run(biasin1)
-pa15=sess.run(biasin1)
+pa15=sess.run(biasin2)
+pa16=sess.run(wwpin)
+ss=np.sum((pa00-pa10)**2)
+ss=ss+np.sum((pa01-pa11)**2)
+ss=ss+np.sum((pa02-pa12)**2)
+ss=ss+np.sum((pa03-pa13)**2)
+ss=ss+np.sum((pa04-pa14)**2)
+ss=ss+np.sum((pa05-pa15)**2)
+ss=ss+np.sum((pa06-pa16)**2)
+print("ss",ss)
+x_data = np.loadtxt('inputX2.csv', delimiter=',')#np.random.rand(1000,6)-0.5
+#x_data[:,6]=x_data[:,3]
+#x_data[:,7]=x_data[:,3]
+#x_data[:,8]=x_data[:,3]
+#x_data[:,9]=x_data[:,3]
+#print(x_data)
+#v1= x_data[:,0] *x_data[:,0] *4 + 2*x_data[:,1]-6*x_data[:,2]+2*x_data[:,3]-x_data[:,4]+1.5*x_data[:,5]#x_data[:,0] * 4 + 1
+v10=(x_data[:,0]+ x_data[:,1]) **2*2-6*np.exp(x_data[:,2])+2*np.sin(x_data[:,3])-x_data[:,4]**3+1.5*x_data[:,5]**2+25 
+v11=(x_data[:,0]) **2 -2*np.exp(x_data[:,2]+0.3)+2*np.cos(x_data[:,3])-20
+v12 = 2*(x_data[:,4]) **3 +np.exp(x_data[:,5])
+v1=np.transpose(np.array([v10, v11, v12]))
+#np.loadtxt('outputY2.csv', delimiter=',')#x_data[:,0] *x_data[:,0] *4 + 2*x_data[:,1]-6*x_data[:,2]+2*x_data[:,3]-x_data[:,4]+1.5*x_data[:,5]+10
+#print(v1)
+v2=sess.run(yin3,feed_dict={x1: x_data, is_training: False})
+#print(v2.T)
+print(np.mean(np.linalg.norm(v1-v2,axis=1)))
+
+
+
+inputXT=np.random.rand(10000,6)-0.5
+outputb=np.zeros((10000,3))#+outputY.mean(axis=0)
+print("pingjun",outputY.mean(axis=0))
+
+#wwpin.load(pa06,sess)
+inputXT=np.random.rand(10000,6)-0.5
+outputb=np.zeros((10000,3))+outputY.mean(axis=0)
+print("pingjun",outputY.mean(axis=0))
+for i in range(500):
+    list1=range(0,10000)
+    list2=random.sample(list1,10000)
+    aa=0
+    for j in range(0,100):
+      loss_,_=sess.run([loss,train2], feed_dict={x1: inputX[list2[j*100:(j+1)*100],:], y: outputb[list2[j*100:(j+1)*100],:], is_training: False})
+      aa=aa+loss_
+
+    #print('wwp',sess.run(wwp))
+    #print('weight1', sess.run(weight1))
+    #print('bias1', sess.run(bias1))
+    #print('weight2', sess.run(weight2))
+    #print('bias2', sess.run(bias2))
+    #print('weight3', sess.run(weight3))
+    #print('bias3', sess.run(bias3))
+    #sess.run(asd)
+    #xinw = sess.run(weightb)
+    #xinw2 = sess.run(weightbb)
+    #print(xinw)
+    #print(xinw2)
+      #if xinw>0:
+      #   weightb.load(0)
+      #if xinw<-1:
+      #   weightb.load(-1)
+    if i%10==0:
+        print('lossss', aa)
+
+
+
+pa00=sess.run(weight1)
+pa01=sess.run(weightin1)
+pa02=sess.run(weightin2)
+pa03=sess.run(bias1)
+pa04=sess.run(biasin1)
+pa05=sess.run(biasin2)
+pa06=sess.run(wwpin)
+
+
+for i in range(500):
+    list1=range(0,10000)
+    list2=random.sample(list1,10000)
+    aa=0
+    for j in range(0,100):
+      loss_,_=sess.run([loss,train3], feed_dict={x1: inputX[list2[j*100:(j+1)*100],:], y: outputY[list2[j*100:(j+1)*100],:], is_training: False})
+      aa=aa+loss_
+    if i%10==0:
+        print('loss', aa)
+pa10=sess.run(weight1)
+pa11=sess.run(weightin1)
+pa12=sess.run(weightin2)
+pa13=sess.run(bias1)
+pa14=sess.run(biasin1)
+pa15=sess.run(biasin2)
 pa16=sess.run(wwpin)
 ss=np.sum((pa00-pa10)**2)
 ss=ss+np.sum((pa01-pa11)**2)
@@ -586,17 +770,18 @@ for i in range(500):
       #   weightb.load(0)
       #if xinw<-1:
       #   weightb.load(-1)
-    print('lossss', aa)
-pa00=sess.run(weightin1)
-pa01=sess.run(weightin2)
-pa02=sess.run(weightin3)
-pa03=sess.run(biasin1)
+    if i%10==0:
+        print('lossss', aa)
+
+
+
+pa00=sess.run(weight1)
+pa01=sess.run(weightin1)
+pa02=sess.run(weightin2)
+pa03=sess.run(bias1)
 pa04=sess.run(biasin1)
-pa05=sess.run(biasin1)
+pa05=sess.run(biasin2)
 pa06=sess.run(wwpin)
-
-
-
 
 
 for i in range(500):
@@ -606,13 +791,14 @@ for i in range(500):
     for j in range(0,100):
       loss_,_=sess.run([loss,train3], feed_dict={x1: inputX[list2[j*100:(j+1)*100],:], y: outputY[list2[j*100:(j+1)*100],:], is_training: False})
       aa=aa+loss_
-    print('loss', aa)
-pa10=sess.run(weightin1)
-pa11=sess.run(weightin2)
-pa12=sess.run(weightin3)
-pa13=sess.run(biasin1)
+    if i%10==0:
+        print('loss', aa)
+pa10=sess.run(weight1)
+pa11=sess.run(weightin1)
+pa12=sess.run(weightin2)
+pa13=sess.run(bias1)
 pa14=sess.run(biasin1)
-pa15=sess.run(biasin1)
+pa15=sess.run(biasin2)
 pa16=sess.run(wwpin)
 ss=np.sum((pa00-pa10)**2)
 ss=ss+np.sum((pa01-pa11)**2)
@@ -638,6 +824,20 @@ v1=np.transpose(np.array([v10, v11, v12]))
 v2=sess.run(yin3,feed_dict={x1: x_data, is_training: False})
 #print(v2.T)
 print(np.mean(np.linalg.norm(v1-v2,axis=1)))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 inputXT=np.random.rand(10000,6)-0.5
 outputb=np.zeros((10000,3))#+outputY.mean(axis=0)
 print("pingjun",outputY.mean(axis=0))
@@ -670,13 +870,14 @@ for i in range(500):
       #   weightb.load(0)
       #if xinw<-1:
       #   weightb.load(-1)
-    print('lossss', aa)
-pa00=sess.run(weightin1)
-pa01=sess.run(weightin2)
-pa02=sess.run(weightin3)
-pa03=sess.run(biasin1)
+    if i%10==0:
+      print('lossss', aa)
+pa00=sess.run(weight1)
+pa01=sess.run(weightin1)
+pa02=sess.run(weightin2)
+pa03=sess.run(bias1)
 pa04=sess.run(biasin1)
-pa05=sess.run(biasin1)
+pa05=sess.run(biasin2)
 pa06=sess.run(wwpin)
 
 
@@ -690,13 +891,14 @@ for i in range(500):
     for j in range(0,100):
       loss_,_=sess.run([loss,train3], feed_dict={x1: inputX[list2[j*100:(j+1)*100],:], y: outputY[list2[j*100:(j+1)*100],:], is_training: False})
       aa=aa+loss_
-    print('loss', aa)
-pa10=sess.run(weightin1)
-pa11=sess.run(weightin2)
-pa12=sess.run(weightin3)
-pa13=sess.run(biasin1)
+    if i%10==0:
+      print('loss', aa)
+pa10=sess.run(weight1)
+pa11=sess.run(weightin1)
+pa12=sess.run(weightin2)
+pa13=sess.run(bias1)
 pa14=sess.run(biasin1)
-pa15=sess.run(biasin1)
+pa15=sess.run(biasin2)
 pa16=sess.run(wwpin)
 ss=np.sum((pa00-pa10)**2)
 ss=ss+np.sum((pa01-pa11)**2)
